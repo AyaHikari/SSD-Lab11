@@ -16,7 +16,10 @@ pipeline {
                 // Using environment variable
                 // To output the value of variable in string, use " "
                 echo "Building version ${NEW_VERSION}"
-                sh "nvm install" // Added shell command to install NVM
+                
+                // Use nvm-windows to install a specific Node.js version
+                bat 'nvm install 16.15.0' // Replace with the desired Node.js version
+                bat 'nvm use 16.15.0' // Use the specified version
             } 
         } 
         stage('Test') { 
