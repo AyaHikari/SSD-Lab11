@@ -1,19 +1,24 @@
+flag = true
+
 pipeline { 
     agent any 
     environment { 
-        flag = 'false' // Define the variable here
+        // Variables defined here can be used by any stage
+        NEW_VERSION = '1.3.0' // Added environment variable
     }
     stages { 
         stage('Build') { 
             steps { 
-                echo 'Building..' 
-                // Commands for your build 
+                echo 'Building Project'
+                // Using environment variable
+                // To output the value of variable in string, use " "
+                echo "Building version ${NEW_VERSION}"
             } 
         } 
         stage('Test') { 
             when { 
                 expression { 
-                    env.flag == 'false' // Access the variable from the environment
+                    flag == true // Ensuring the flag variable logic remains
                 } 
             }
             steps { 
