@@ -19,4 +19,5 @@ pipeline {
                 // Here you can define commands for your deployment 
             } 
         } 
-    }
+    } 
+}
