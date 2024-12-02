@@ -1,5 +1,8 @@
 pipeline { 
     agent any 
+    environment { 
+        flag = 'false' // Define the variable here
+    }
     stages { 
         stage('Build') { 
             steps { 
@@ -10,7 +13,7 @@ pipeline {
         stage('Test') { 
             when { 
                 expression { 
-                    flag == false 
+                    env.flag == 'false' // Access the variable from the environment
                 } 
             }
             steps { 
