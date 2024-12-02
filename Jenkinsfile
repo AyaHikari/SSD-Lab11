@@ -4,19 +4,24 @@ pipeline {
         stage('Build') { 
             steps { 
                 echo 'Building..' 
-                // Here you can define commands for your build 
+                // Commands for your build 
             } 
         } 
         stage('Test') { 
+            when { 
+                expression { 
+                    flag == false 
+                } 
+            }
             steps { 
                 echo 'Testing..' 
-                // Here you can define commands for your tests 
+                // Commands for your tests 
             } 
         } 
         stage('Deploy') { 
             steps { 
                 echo 'Deploying....' 
-                // Here you can define commands for your deployment 
+                // Commands for your deployment 
             } 
         } 
     } 
