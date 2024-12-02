@@ -2,57 +2,47 @@ flag = true
 
 pipeline { 
     agent any 
-    tools {
-        maven 'Maven' // Added Maven tool configuration
+    parameters {
+        // These are types of parameters
+        string(name: 'VERSION', defaultValue: '', description: 'Version to deploy on prod')
+        choice(name: 'VERSION', choices: ['1.1.0', '1.2.0', '1.3.0'], description: 'Select version')
+        booleanParam(name: 'executeTests', defaultValue: true, description: 'Run tests if true')
     }
     environment { 
         // Variables defined here can be used by any stage
-        NEW_VERSION = '1.3.0' // Added new environment variable
+        NEW_VERSION = '1.3.0'
     }
     stages { 
         stage('Build') { 
             steps { 
                 echo 'Building Project'
-                // Using environment variable
-                // To output the value of variable in string, use " "
                 echo "Building version ${NEW_VERSION}"
-                
-                // Use nvm-windows to install a specific Node.js version
-                bat 'nvm install 16.15.0' // Replace with the desired Node.js version
-                bat 'nvm use 16.15.0' // Use the specified version
             } 
         } 
         stage('Test') { 
             when { 
                 expression { 
-                    flag == true // Ensuring the flag variable logic remains
+                    params.executeTests // Conditional execution based on the boolean parameter
                 } 
             }
             steps { 
-                echo 'Testing..' 
-                // Commands for your tests 
+                echo 'Testing Project' 
             } 
         } 
         stage('Deploy') { 
             steps { 
-                echo 'Deploying....' 
-                // Commands for your deployment 
+                echo 'Deploying Project' 
             } 
         } 
     } 
     post {
         always { 
-            // This action will always run, regardless of the build result
             echo 'Post build condition running'
         }
-
         failure {
-            // This action will run only if the build fails
             echo 'Post Action if Build Failed'
         }
-
         success {
-            // This action will run only if the build succeeds
             echo 'Post Action if Build Succeeded'
         }
     }
