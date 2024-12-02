@@ -2,9 +2,12 @@ flag = true
 
 pipeline { 
     agent any 
+    tools {
+        maven 'Maven' // Added Maven tool configuration
+    }
     environment { 
         // Variables defined here can be used by any stage
-        NEW_VERSION = '1.3.0' // Added environment variable
+        NEW_VERSION = '1.3.0' // Added new environment variable
     }
     stages { 
         stage('Build') { 
@@ -13,6 +16,7 @@ pipeline {
                 // Using environment variable
                 // To output the value of variable in string, use " "
                 echo "Building version ${NEW_VERSION}"
+                sh "nvm install" // Added shell command to install NVM
             } 
         } 
         stage('Test') { 
