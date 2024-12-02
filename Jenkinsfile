@@ -20,4 +20,20 @@ pipeline {
             } 
         } 
     } 
+    post {
+        always { 
+            // This action will always run, regardless of the build result
+            echo 'Post build condition running'
+        }
+
+        failure {
+            // This action will run only if the build fails
+            echo 'Post Action if Build Failed'
+        }
+
+        success {
+            // This action will run only if the build succeeds
+            echo 'Post Action if Build Succeeded'
+        }
+    }
 }
